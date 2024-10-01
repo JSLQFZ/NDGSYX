@@ -1,9 +1,9 @@
 // ==UserScript==
-// @name         Microsoft Bing Rewards每日任务脚本
-// @version      V3.0.4
-// @description  自动完成微软Rewards每日搜索任务,每次运行时获取抖音/微博/哔哩哔哩/百度/头条热门词,避免使用同样的搜索词被封号。
-// @note         更新于 2024年9月30日
-// @author       怀沙2049
+// @name         Bing Rewards脚本
+// @version      V0.0.2
+// @description  Rewards每日搜索任务。
+// @note         看上游更新
+// @author       NDGSYX
 // @match        https://*.bing.com/*
 // @license      GNU GPLv3
 // @icon         https://www.bing.com/favicon.ico
@@ -15,7 +15,9 @@
 // @grant        GM_setValue
 // @grant        GM_getValue
 // @grant        GM_xmlhttpRequest
-// @namespace    https://greasyfork.org/zh-CN/scripts/477107
+// @namespace    https://github.com/JSLQFZ/NDGSYX
+// @downloadURL https://github.com/JSLQFZ/NDGSYX/blob/main/Test.js
+// @updateURL https://github.com/JSLQFZ/NDGSYX/blob/main/Test.js
 // ==/UserScript==
 
 var max_rewards = 40; //重复执行的次数
@@ -31,7 +33,7 @@ var default_search_words = ["盛年不重来，一日难再晨", "千里之行�
     "人无远虑，必有近忧", "为中华之崛起而读书", "一日无书，百事荒废", "岂能尽如人意，但求无愧我心", "人生自古谁无死，留取丹心照汗青", "吾生也有涯，而知也无涯", "生于忧患，死于安乐",
     "言必信，行必果", "读书破万卷，下笔如有神", "夫君子之行，静以修身，俭以养德", "老骥伏枥，志在千里", "一日不读书，胸臆无佳想", "王侯将相宁有种乎", "淡泊以明志。宁静而致远,", "卧龙跃马终黄土"]
 //{weibohot}微博热搜榜//{douyinhot}抖音热搜榜/{zhihuhot}知乎热搜榜/{baiduhot}百度热搜榜/{toutiaohot}今日头条热搜榜/
-var keywords_source = ['BaiduHot', 'TouTiaoHot', 'DouYinHot', 'WeiBoHot'];
+var keywords_source = ['baidu', 'toutiao', 'douyin', 'weibo'];
 var random_keywords_source = keywords_source[Math.floor(Math.random() * keywords_source.length)]
 var current_source_index = 0; // 当前搜索词来源的索引
 
@@ -43,7 +45,7 @@ async function douyinhot_dic() {
     while (current_source_index < keywords_source.length) {
         const source = keywords_source[current_source_index]; // 获取当前搜索词来源
         try {
-            const response = await fetch("https://api.gumengya.com/Api/" + source); // 发起网络请求
+            const response = await fetch("http://a.523641.xyz:6688/" + source); // 发起网络请求
             if (!response.ok) {
                 throw new Error('HTTP error! status: ' + response.status); // 如果响应状态不是OK，则抛出错误
             }
